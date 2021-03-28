@@ -3,7 +3,7 @@ CSI2132 Project
 
 ## Requirements
 
-pip3 install flask
+pip3 install flask <br>
 pip3 install psycopg2
 
 ## Account Connection
