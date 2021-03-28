@@ -23,6 +23,7 @@ class DB:
                                             database=self.database)
         except (Exception, Error) as error:
             print("Error while connecting to PostgreSQL", error)
+            exit(1)
     
     # For SQL statements which modify the database
     def commit(self, command):
