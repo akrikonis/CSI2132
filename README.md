@@ -19,7 +19,7 @@ password=YOUR PASSWORD
 
 ## Running Flask Option 1
 
-export FLASK_APP=app.py
+export FLASK_APP=app.py <br>
 python3 -m flask run         (Or alternatively: flask run)
 
 ## Running Flask Option 2
