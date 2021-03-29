@@ -10,11 +10,13 @@ import sqlite3
 # Example for retrieving data:
 # from db import DB
 # x = DB() #No credentials are needed for sqlite3
+# x.connect(useLocal=True) #set useLocal to true for sqlite3
 # x.fetch("SELECT * FROM ParentHotelBrand")
 
 # Example for adding data:
 # from db import DB
 # x = DB() #No credentials are needed for sqlite3
+# x.connect(useLocal=True) #set useLocal to true for sqlite3
 # x.commit("INSERT INTO ParentHotelBrand VALUES (whatever)")
 
 # Custom DB class for handling all DB related connections
