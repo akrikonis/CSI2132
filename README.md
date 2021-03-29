@@ -8,7 +8,7 @@ Section 4 Group 57 <br>
 pip3 install flask <br>
 pip3 install psycopg2
 
-## Account Connection
+## Account Connection (if using PG Admin)
 
 Create .env file in project root <br>
 Add the following lines with your credentials: <br>
