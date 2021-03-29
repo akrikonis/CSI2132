@@ -16,7 +16,7 @@ app = Flask(__name__)
 def home():
     return '''
     <h1>CSI2132 Project</h1>
-    <h3> Section 4 Group 57 </h3>
+    <h3> Section B04 Group 57 </h3>
     <p> For a full list of available querries click <a href="https://github.com/akrikonis/CSI2132">here.</a> </p>
     '''
 
