@@ -33,7 +33,7 @@ class DB:
     # Connect
     def connect(self, useLocal=False):
         if useLocal:
-            self.connection = sqlite3.connect('local.db')
+            self.connection = sqlite3.connect('local.db',check_same_thread=False)
         else:
             try:
                 self.connection = psycopg2.connect(user=self.user,

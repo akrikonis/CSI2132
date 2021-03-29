@@ -1,4 +1,5 @@
 # Libraries
+import json # For json response
 import configparser # Read credentials to connect to database
 from flask import Flask # Simple rest api library
 from db import DB # Custom DB class for handling all DB related connections
@@ -19,8 +20,9 @@ def home():
     <p> For a full list of available querries click <a href="https://github.com/akrikonis/CSI2132">here.</a> </p>
     '''
 
+
 @app.route('/api/parentHotels', methods=['GET'])
-def get_parentHotels():
-    return "Hi"
+def flask_parentHotels():
+    return json.dumps(database.fetch("SELECT * FROM ParentHotelBrand;"))
 
 app.run()
