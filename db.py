@@ -1,12 +1,21 @@
 # Libraries
 
 # PG Admin 4
-#import psycopg2
-#from psycopg2 import Error
+import psycopg2
+from psycopg2 import Error
 
 # SQLite3
 import sqlite3
 
+# Example for retrieving data:
+# from db import DB
+# x = DB() #No credentials are needed for sqlite3
+# x.fetch("SELECT * FROM ParentHotelBrand")
+
+# Example for adding data:
+# from db import DB
+# x = DB() #No credentials are needed for sqlite3
+# x.commit("INSERT INTO ParentHotelBrand VALUES (whatever)")
 
 # Custom DB class for handling all DB related connections
 class DB:
