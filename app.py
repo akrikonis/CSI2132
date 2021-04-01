@@ -20,8 +20,8 @@ def home():
     <p> For a full list of available querries click <a href="https://github.com/akrikonis/CSI2132">here.</a> </p>
     '''
 
-#Post will insert new data, get will retrieve all data, delete will delete data
-@app.route('/api/parentHotels', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
+#ParentHotelBrand Endpoint
+@app.route('/api/parentHotel', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
 def flask_parentHotels():
     if request.method == 'POST':
         NumOfHotels = request.form["NumOfHotels"]
@@ -44,6 +44,34 @@ def flask_parentHotels():
     elif request.method == 'DELETE':
         ParentHotelID = request.form["ParentHotelID"]
         database.commit("DELETE FROM ParentHotelBrand WHERE ParentHotelID="+ParentHotelID+";")
+        return ""
+
+#Customer Endpoint
+@app.route('/api/customer', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
+def flask_parentHotels():
+    if request.method == 'POST':
+        FullName = request.form["FullName"]
+        CusID = request.form["CusID"]
+        Address = request.form["Address"]
+        DateOfReg = request.form["DateOfReg"]
+        Phone = request.form["Phone"]
+        SIN = request.form["SIN"]
+        database.commit("INSERT INTO Customer VALUES ("+CusID+",'"+FullName+"','"+Address+"','"+DateOfReg+"','"+SIN+"','"+Phone+"');")
+        return ""
+    elif request.method == 'GET':
+        return json.dumps(database.fetch("SELECT * FROM Customer;"))
+    elif request.method == 'PATCH':
+        FullName = request.form["FullName"]
+        CusID = request.form["CusID"]
+        Address = request.form["Address"]
+        DateOfReg = request.form["DateOfReg"]
+        Phone = request.form["Phone"]
+        SIN = request.form["SIN"]
+        database.commit("UPDATE Customer SET FullName="+FullName+", Address='"+Address+"', DateOfReg='"+DateOfReg+"', SIN='"+SIN+"', Phone='"+Phone+"' WHERE CusID="+CusID+";")
+        return ""
+    elif request.method == 'DELETE':
+        CusID = request.form["CusID"]
+        database.commit("DELETE FROM Customer WHERE CusID="+CusID+";")
         return ""
 
 app.run()
