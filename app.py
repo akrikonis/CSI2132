@@ -1,5 +1,6 @@
 # Libraries
 import json # For json response
+import atexit # For proper db disconnect on app exit
 import configparser # Read credentials to connect to database
 from flask import Flask, request # Simple rest api library
 from db import DB # Custom DB class for handling all DB related connections
@@ -9,6 +10,13 @@ config = configparser.ConfigParser()
 config.read(".env")
 database = DB(config["ACCOUNT"]["user"], config["ACCOUNT"]["password"], "web0.eecs.uottawa.ca", 15432, "group_b04_g57")
 database.connect(useLocal=True) #For local testing without pg admin
+
+# Disconnect from database function
+def shutdown():
+    database.close()
+    print("Connection Closed")
+
+atexit.register(shutdown) # Disconnect from database
 
 app = Flask(__name__) 
 
