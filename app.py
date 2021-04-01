@@ -136,4 +136,38 @@ def flask_parentHotels():
         database.commit("DELETE FROM HotelChain WHERE HotelID="+HotelID+";")
         return ""
 
+#Room Endpoint
+@app.route('/api/room', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
+def flask_parentHotels():
+    if request.method == 'POST':
+        Price = request.form["Price"]
+        RoomID = request.form["RoomID"]
+        Amenities = request.form["Amenities"]
+        Extendable = request.form["Extendable"]
+        Mountainview = request.form["Mountainview"]
+        Seaview = request.form["Seaview"]
+        Capacity = request.form["Capacity"]
+        Available = request.form["Available"]
+        HotelID = request.form["HotelID"]
+        database.commit("INSERT INTO Room VALUES ("+RoomID+","+Price+",'"+Amenities+"','"+Extendable+"','"+Mountainview+"','"+Seaview+"',"+Capacity+",'"+Available+"',"+HotelID+");")
+        return ""
+    elif request.method == 'GET':
+        return json.dumps(database.fetch("SELECT * FROM HotelChain;"))
+    elif request.method == 'PATCH':
+        Price = request.form["Price"]
+        RoomID = request.form["RoomID"]
+        Amenities = request.form["Amenities"]
+        Extendable = request.form["Extendable"]
+        Mountainview = request.form["Mountainview"]
+        Seaview = request.form["Seaview"]
+        Capacity = request.form["Capacity"]
+        Available = request.form["Available"]
+        HotelID = request.form["HotelID"]
+        database.commit("UPDATE Room SET Price="+Price+", Amenities='"+Amenities+"', Extendable='"+Extendable+"', Mountainview='"+Mountainview+"', Seaview='"+Seaview+"', Capacity="+Capacity+", Available='"+Available+"', HotelID="+HotelID+" WHERE RoomID="+RoomID+";")
+        return ""
+    elif request.method == 'DELETE':
+        RoomID = request.form["RoomID"]
+        database.commit("DELETE FROM Room WHERE RoomID="+RoomID+";")
+        return ""
+
 app.run()
