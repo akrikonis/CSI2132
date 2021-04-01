@@ -48,7 +48,7 @@ def flask_parentHotels():
 
 #Customer Endpoint
 @app.route('/api/customer', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
-def flask_parentHotels():
+def flask_customer():
     if request.method == 'POST':
         FullName = request.form["FullName"]
         CusID = request.form["CusID"]
@@ -76,7 +76,7 @@ def flask_parentHotels():
 
 #Employee Endpoint
 @app.route('/api/customer', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
-def flask_parentHotels():
+def flask_employee():
     if request.method == 'POST':
         FullName = request.form["FullName"]
         EmpID = request.form["EmpID"]
@@ -106,7 +106,7 @@ def flask_parentHotels():
 
 #Hotel Chain Endpoint
 @app.route('/api/hotelChain', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
-def flask_parentHotels():
+def flask_hotelChain():
     if request.method == 'POST':
         StarCategory = request.form["StarCategory"]
         HotelID = request.form["HotelID"]
@@ -138,7 +138,7 @@ def flask_parentHotels():
 
 #Room Endpoint
 @app.route('/api/room', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
-def flask_parentHotels():
+def flask_room():
     if request.method == 'POST':
         Price = request.form["Price"]
         RoomID = request.form["RoomID"]
@@ -168,6 +168,34 @@ def flask_parentHotels():
     elif request.method == 'DELETE':
         RoomID = request.form["RoomID"]
         database.commit("DELETE FROM Room WHERE RoomID="+RoomID+";")
+        return ""
+
+#Booking Endpoint
+@app.route('/api/booking', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
+def flask_booking():
+    if request.method == 'POST':
+        BookingID = request.form["BookingID"]
+        Occupants = request.form["Occupants"]
+        RoomID = request.form["RoomID"]
+        CusID = request.form["CusID"]
+        StartDate = request.form["StartDate"]
+        HotelID = request.form["HotelID"]
+        database.commit("INSERT INTO Booking VALUES ("+BookingID+","+Occupants+","+RoomID+","+CusID+",'"+StartDate+"',"+HotelID+");")
+        return ""
+    elif request.method == 'GET':
+        return json.dumps(database.fetch("SELECT * FROM HotelChain;"))
+    elif request.method == 'PATCH':
+        BookingID = request.form["BookingID"]
+        Occupants = request.form["Occupants"]
+        RoomID = request.form["RoomID"]
+        CusID = request.form["CusID"]
+        StartDate = request.form["StartDate"]
+        HotelID = request.form["HotelID"]
+        database.commit("UPDATE Booking SET Occupants="+Occupants+", RoomID="+RoomID+", CusID="+CusID+", StartDate='"+StartDate+"', HotelID="+HotelID+" WHERE BookingID="+BookingID+";")
+        return ""
+    elif request.method == 'DELETE':
+        BookingID = request.form["BookingID"]
+        database.commit("DELETE FROM Booking WHERE BookingID="+BookingID+";")
         return ""
 
 app.run()
