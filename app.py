@@ -17,7 +17,7 @@ def home():
     return '''
     <h1>CSI2132 Project</h1>
     <h3> Section B04 Group 57 </h3>
-    <p> For a full list of available querries click <a href="https://github.com/akrikonis/CSI2132">here.</a> </p>
+    <p> For project files click <a href="https://github.com/akrikonis/CSI2132">here.</a> </p>
     '''
 
 #ParentHotelBrand Endpoint
@@ -72,6 +72,36 @@ def flask_parentHotels():
     elif request.method == 'DELETE':
         CusID = request.form["CusID"]
         database.commit("DELETE FROM Customer WHERE CusID="+CusID+";")
+        return ""
+
+#Employee Endpoint
+@app.route('/api/customer', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
+def flask_parentHotels():
+    if request.method == 'POST':
+        FullName = request.form["FullName"]
+        EmpID = request.form["EmpID"]
+        Address = request.form["Address"]
+        Salary = request.form["Salary"]
+        Role = request.form["Role"]
+        ParentHotelID = request.form["ParentHotelID"]
+        SIN = request.form["SIN"]
+        database.commit("INSERT INTO Employee VALUES ("+EmpID+",'"+FullName+"','"+Address+"',"+Salary+",'"+Role+"',"+ParentHotelID+",'"+SIN+"');")
+        return ""
+    elif request.method == 'GET':
+        return json.dumps(database.fetch("SELECT * FROM Employee;"))
+    elif request.method == 'PATCH':
+        FullName = request.form["FullName"]
+        EmpID = request.form["EmpID"]
+        Address = request.form["Address"]
+        Salary = request.form["Salary"]
+        Role = request.form["Role"]
+        ParentHotelID = request.form["ParentHotelID"]
+        SIN = request.form["SIN"]
+        database.commit("UPDATE Employee SET FullName="+FullName+", Address='"+Address+"', Salary="+Salary+", Role='"+Role+"', ParentHotelID="+ParentHotelID+", SIN='"+SIN+" WHERE EmpID="+EmpID+";")
+        return ""
+    elif request.method == 'DELETE':
+        CusID = request.form["CusID"]
+        database.commit("DELETE FROM Employee WHERE EmpID="+EmpID+";")
         return ""
 
 app.run()
