@@ -3,6 +3,7 @@ import json # For json response
 import atexit # For proper db disconnect on app exit
 import configparser # Read credentials to connect to database
 from flask import Flask, request # Simple rest api library
+from flask_cors import CORS # allow Cors for flask server
 from db import DB # Custom DB class for handling all DB related connections
 
 # Get credentials and connect to database
@@ -19,6 +20,7 @@ def shutdown():
 atexit.register(shutdown) # Disconnect from database
 
 app = Flask(__name__) 
+CORS(app)
 
 @app.route('/', methods=['GET'])
 def home():
@@ -32,25 +34,25 @@ def home():
 @app.route('/api/parentHotel', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
 def flask_parentHotels():
     if request.method == 'POST':
-        NumOfHotels = request.form["NumOfHotels"]
-        ParentHotelID = request.form["ParentHotelID"]
-        CentralLocation = request.form["CentralLocation"]
-        EmailAddress = request.form["EmailAddress"]
-        PhoneNumber = request.form["PhoneNumber"]
+        NumOfHotels = request.json["NumOfHotels"]
+        ParentHotelID = request.json["ParentHotelID"]
+        CentralLocation = request.json["CentralLocation"]
+        EmailAddress = request.json["EmailAddress"]
+        PhoneNumber = request.json["PhoneNumber"]
         database.commit("INSERT INTO ParentHotelBrand VALUES ("+ParentHotelID+","+NumOfHotels+",'"+CentralLocation+"','"+EmailAddress+"','"+PhoneNumber+"');")
         return ""
     elif request.method == 'GET':
         return json.dumps(database.fetch("SELECT * FROM ParentHotelBrand;"))
     elif request.method == 'PATCH':
-        NumOfHotels = request.form["NumOfHotels"]
-        ParentHotelID = request.form["ParentHotelID"]
-        CentralLocation = request.form["CentralLocation"]
-        EmailAddress = request.form["EmailAddress"]
-        PhoneNumber = request.form["PhoneNumber"]
+        NumOfHotels = request.json["NumOfHotels"]
+        ParentHotelID = request.json["ParentHotelID"]
+        CentralLocation = request.json["CentralLocation"]
+        EmailAddress = request.json["EmailAddress"]
+        PhoneNumber = request.json["PhoneNumber"]
         database.commit("UPDATE ParentHotelBrand SET NumOfHotels="+NumOfHotels+", CentralLocation='"+CentralLocation+"', EmailAddress='"+EmailAddress+"', PhoneNumber='"+PhoneNumber+"' WHERE ParentHotelID="+ParentHotelID+";")
         return ""
     elif request.method == 'DELETE':
-        ParentHotelID = request.form["ParentHotelID"]
+        ParentHotelID = request.json["ParentHotelID"]
         database.commit("DELETE FROM ParentHotelBrand WHERE ParentHotelID="+ParentHotelID+";")
         return ""
 
@@ -58,89 +60,89 @@ def flask_parentHotels():
 @app.route('/api/customer', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
 def flask_customer():
     if request.method == 'POST':
-        FullName = request.form["FullName"]
-        CusID = request.form["CusID"]
-        Address = request.form["Address"]
-        DateOfReg = request.form["DateOfReg"]
-        Phone = request.form["Phone"]
-        SIN = request.form["SIN"]
-        database.commit("INSERT INTO Customer VALUES ("+CusID+",'"+FullName+"','"+Address+"','"+DateOfReg+"','"+SIN+"','"+Phone+"');")
+        FullName = request.json["FullName"]
+        CusID = request.json["CusID"]
+        Address = request.json["Address"]
+        DateOfReg = request.json["DateOfReg"]
+        Phone = request.json["Phone"]
+        SIN = request.json["SIN"]
+        database.commit("INSERT INTO Customer VALUES ("+str(CusID)+",'"+str(FullName)+"','"+str(Address)+"','"+str(DateOfReg)+"','"+str(SIN)+"','"+str(Phone)+"');")
         return ""
     elif request.method == 'GET':
         return json.dumps(database.fetch("SELECT * FROM Customer;"))
     elif request.method == 'PATCH':
-        FullName = request.form["FullName"]
-        CusID = request.form["CusID"]
-        Address = request.form["Address"]
-        DateOfReg = request.form["DateOfReg"]
-        Phone = request.form["Phone"]
-        SIN = request.form["SIN"]
-        database.commit("UPDATE Customer SET FullName='"+FullName+"', Address='"+Address+"', DateOfReg='"+DateOfReg+"', SIN='"+SIN+"', Phone='"+Phone+"' WHERE CusID="+CusID+";")
+        FullName = request.json["FullName"]
+        CusID = request.json["CusID"]
+        Address = request.json["Address"]
+        DateOfReg = request.json["DateOfReg"]
+        Phone = request.json["Phone"]
+        SIN = request.json["SIN"]
+        database.commit("UPDATE Customer SET FullName='"+FullName+"', Address='"+Address+"', DateOfReg='"+DateOfReg+"', SIN='"+SIN+"', Phone='"+Phone+"' WHERE CusID="+str(CusID)+";")
         return ""
     elif request.method == 'DELETE':
-        CusID = request.form["CusID"]
+        CusID = request.json["CusID"]
         database.commit("DELETE FROM Customer WHERE CusID="+CusID+";")
         return ""
 
 #Employee Endpoint
-@app.route('/api/customer', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
+@app.route('/api/employee', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
 def flask_employee():
     if request.method == 'POST':
-        FullName = request.form["FullName"]
-        EmpID = request.form["EmpID"]
-        Address = request.form["Address"]
-        Salary = request.form["Salary"]
-        Role = request.form["Role"]
-        ParentHotelID = request.form["ParentHotelID"]
-        SIN = request.form["SIN"]
-        database.commit("INSERT INTO Employee VALUES ("+EmpID+",'"+FullName+"','"+Address+"',"+Salary+",'"+Role+"',"+ParentHotelID+",'"+SIN+"');")
+        FullName = request.json["FullName"]
+        EmpID = request.json["EmpID"]
+        Address = request.json["Address"]
+        Salary = request.json["Salary"]
+        Role = request.json["Role"]
+        ParentHotelID = request.json["ParentHotelID"]
+        SIN = request.json["SIN"]
+        database.commit("INSERT INTO Employee VALUES ("+str(EmpID)+",'"+FullName+"','"+Address+"',"+str(Salary)+",'"+Role+"',"+str(ParentHotelID)+",'"+SIN+"');")
         return ""
     elif request.method == 'GET':
         return json.dumps(database.fetch("SELECT * FROM Employee;"))
     elif request.method == 'PATCH':
-        FullName = request.form["FullName"]
-        EmpID = request.form["EmpID"]
-        Address = request.form["Address"]
-        Salary = request.form["Salary"]
-        Role = request.form["Role"]
-        ParentHotelID = request.form["ParentHotelID"]
-        SIN = request.form["SIN"]
-        database.commit("UPDATE Employee SET FullName='"+FullName+"', Address='"+Address+"', Salary="+Salary+", Role='"+Role+"', ParentHotelID="+ParentHotelID+", SIN='"+SIN+"' WHERE EmpID="+EmpID+";")
+        FullName = request.json["FullName"]
+        EmpID = request.json["EmpID"]
+        Address = request.json["Address"]
+        Salary = request.json["Salary"]
+        Role = request.json["Role"]
+        ParentHotelID = request.json["ParentHotelID"]
+        SIN = request.json["SIN"]
+        database.commit("UPDATE Employee SET FullName='"+FullName+"', Address='"+Address+"', Salary="+str(Salary)+", Role='"+Role+"', ParentHotelID="+str(ParentHotelID)+", SIN='"+SIN+"' WHERE EmpID="+str(EmpID)+";")
         return ""
     elif request.method == 'DELETE':
-        CusID = request.form["CusID"]
-        database.commit("DELETE FROM Employee WHERE EmpID="+EmpID+";")
+        EmpID = request.json["EmpID"]
+        database.commit("DELETE FROM Employee WHERE EmpID="+str(EmpID)+";")
         return ""
 
 #Hotel Chain Endpoint
 @app.route('/api/hotelChain', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
 def flask_hotelChain():
     if request.method == 'POST':
-        StarCategory = request.form["StarCategory"]
-        HotelID = request.form["HotelID"]
-        NumOfRooms = request.form["NumOfRooms"]
-        PhoneNumber = request.form["PhoneNumber"]
-        Address = request.form["Address"]
-        ContactEmail = request.form["ContactEmail"]
-        ParentHotelID = request.form["ParentHotelID"]
-        Name = request.form["Name"]
-        database.commit("INSERT INTO HotelChain VALUES ("+HotelID+","+StarCategory+","+NumOfRooms+",'"+PhoneNumber+"','"+Address+"','"+ContactEmail+"',"+ParentHotelID+",'"+Name+"');")
+        StarCategory = request.json["StarCategory"]
+        HotelID = request.json["HotelID"]
+        NumOfRooms = request.json["NumOfRooms"]
+        PhoneNumber = request.json["PhoneNumber"]
+        Address = request.json["Address"]
+        ContactEmail = request.json["ContactEmail"]
+        ParentHotelID = request.json["ParentHotelID"]
+        Name = request.json["Name"]
+        database.commit("INSERT INTO HotelChain VALUES ("+str(HotelID)+","+str(StarCategory)+","+str(NumOfRooms)+",'"+PhoneNumber+"','"+Address+"','"+ContactEmail+"',"+str(ParentHotelID)+",'"+Name+"');")
         return ""
     elif request.method == 'GET':
         return json.dumps(database.fetch("SELECT * FROM HotelChain;"))
     elif request.method == 'PATCH':
-        StarCategory = request.form["StarCategory"]
-        HotelID = request.form["HotelID"]
-        NumOfRooms = request.form["NumOfRooms"]
-        PhoneNumber = request.form["PhoneNumber"]
-        Address = request.form["Address"]
-        ContactEmail = request.form["ContactEmail"]
-        ParentHotelID = request.form["ParentHotelID"]
-        Name = request.form["Name"]
-        database.commit("UPDATE HotelChain SET StarCategory="+StarCategory+", NumOfRooms="+NumOfRooms+", PhoneNumber='"+PhoneNumber+"', Address='"+Address+"', ContactEmail='"+ContactEmail+"', ParentHotelID="+ParentHotelID+", Name='"+Name+"' WHERE HotelID="+HotelID+";")
+        StarCategory = request.json["StarCategory"]
+        HotelID = request.json["HotelID"]
+        NumOfRooms = request.json["NumOfRooms"]
+        PhoneNumber = request.json["PhoneNumber"]
+        Address = request.json["Address"]
+        ContactEmail = request.json["ContactEmail"]
+        ParentHotelID = request.json["ParentHotelID"]
+        Name = request.json["Name"]
+        database.commit("UPDATE HotelChain SET StarCategory="+str(StarCategory)+", NumOfRooms="+str(NumOfRooms)+", PhoneNumber='"+PhoneNumber+"', Address='"+Address+"', ContactEmail='"+ContactEmail+"', ParentHotelID="+str(ParentHotelID)+", Name='"+Name+"' WHERE HotelID="+str(HotelID)+";")
         return ""
     elif request.method == 'DELETE':
-        CusID = request.form["CusID"]
+        HotelID = request.json["HotelID"]
         database.commit("DELETE FROM HotelChain WHERE HotelID="+HotelID+";")
         return ""
 
@@ -148,61 +150,75 @@ def flask_hotelChain():
 @app.route('/api/room', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
 def flask_room():
     if request.method == 'POST':
-        Price = request.form["Price"]
-        RoomID = request.form["RoomID"]
-        Amenities = request.form["Amenities"]
-        Extendable = request.form["Extendable"]
-        Mountainview = request.form["Mountainview"]
-        Seaview = request.form["Seaview"]
-        Capacity = request.form["Capacity"]
-        Available = request.form["Available"]
-        HotelID = request.form["HotelID"]
-        database.commit("INSERT INTO Room VALUES ("+RoomID+","+Price+",'"+Amenities+"','"+Extendable+"','"+Mountainview+"','"+Seaview+"',"+Capacity+",'"+Available+"',"+HotelID+");")
+        Price = request.json["Price"]
+        RoomID = request.json["RoomID"]
+        Amenities = request.json["Amenities"]
+        Extendable = request.json["Extendable"]
+        Mountainview = request.json["Mountainview"]
+        Seaview = request.json["Seaview"]
+        Capacity = request.json["Capacity"]
+        Available = request.json["Available"]
+        HotelID = request.json["HotelID"]
+        database.commit("INSERT INTO Room VALUES ("+str(RoomID)+","+str(Price)+",'"+Amenities+"','"+Extendable+"','"+Mountainview+"','"+Seaview+"',"+str(Capacity)+",'"+Available+"',"+str(HotelID)+");")
         return ""
     elif request.method == 'GET':
-        return json.dumps(database.fetch("SELECT * FROM HotelChain;"))
+        return json.dumps(database.fetch("SELECT * FROM Room;"))
     elif request.method == 'PATCH':
-        Price = request.form["Price"]
-        RoomID = request.form["RoomID"]
-        Amenities = request.form["Amenities"]
-        Extendable = request.form["Extendable"]
-        Mountainview = request.form["Mountainview"]
-        Seaview = request.form["Seaview"]
-        Capacity = request.form["Capacity"]
-        Available = request.form["Available"]
-        HotelID = request.form["HotelID"]
-        database.commit("UPDATE Room SET Price="+Price+", Amenities='"+Amenities+"', Extendable='"+Extendable+"', Mountainview='"+Mountainview+"', Seaview='"+Seaview+"', Capacity="+Capacity+", Available='"+Available+"', HotelID="+HotelID+" WHERE RoomID="+RoomID+";")
+        Price = request.json["Price"]
+        RoomID = request.json["RoomID"]
+        Amenities = request.json["Amenities"]
+        Extendable = request.json["Extendable"]
+        Mountainview = request.json["Mountainview"]
+        Seaview = request.json["Seaview"]
+        Capacity = request.json["Capacity"]
+        Available = request.json["Available"]
+        HotelID = request.json["HotelID"]
+        database.commit("UPDATE Room SET Price="+str(Price)+", Amenities='"+Amenities+"', Extendable='"+Extendable+"', Mountainview='"+Mountainview+"', Seaview='"+Seaview+"', Capacity="+str(Capacity)+", Available='"+Available+"', HotelID="+str(HotelID)+" WHERE RoomID="+str(RoomID)+";")
         return ""
     elif request.method == 'DELETE':
-        RoomID = request.form["RoomID"]
-        database.commit("DELETE FROM Room WHERE RoomID="+RoomID+";")
+        RoomID = request.json["RoomID"]
+        database.commit("DELETE FROM Room WHERE RoomID="+str(RoomID)+";")
         return ""
+
+#Book room endpoint
+@app.route('/api/room/book', methods=['PATCH'])
+def flask_room_book():
+    RoomID = request.json["RoomID"]
+    database.commit("UPDATE Room SET Available='booked' WHERE RoomID="+str(RoomID)+";")
+    return ""
+
+#Rent room endpoint
+@app.route('/api/room/rent', methods=['PATCH'])
+def flask_room_rent():
+    RoomID = request.json["RoomID"]
+    database.commit("UPDATE Room SET Available='rented' WHERE RoomID="+str(RoomID)+";")
+    return ""
 
 #Booking Endpoint
 @app.route('/api/booking', methods=['GET', 'POST', 'PATCH' , 'DELETE'])
 def flask_booking():
     if request.method == 'POST':
-        BookingID = request.form["BookingID"]
-        Occupants = request.form["Occupants"]
-        RoomID = request.form["RoomID"]
-        CusID = request.form["CusID"]
-        StartDate = request.form["StartDate"]
-        HotelID = request.form["HotelID"]
-        database.commit("INSERT INTO Booking VALUES ("+BookingID+","+Occupants+","+RoomID+","+CusID+",'"+StartDate+"',"+HotelID+");")
+        BookingID = request.json["BookingID"]
+        Occupants = request.json["Occupants"]
+        RoomID = request.json["RoomID"]
+        CusID = request.json["CusID"]
+        StartDate = request.json["StartDate"]
+        HotelID = request.json["HotelID"]
+        database.commit("INSERT INTO Booking VALUES ("+str(BookingID)+","+str(Occupants)+","+str(RoomID)+","+str(CusID)+",'"+str(StartDate)+"',"+str(HotelID)+");")
         return ""
     elif request.method == 'GET':
         return json.dumps(database.fetch("SELECT * FROM HotelChain;"))
     elif request.method == 'PATCH':
-        BookingID = request.form["BookingID"]
-        Occupants = request.form["Occupants"]
-        RoomID = request.form["RoomID"]
-        CusID = request.form["CusID"]
-        StartDate = request.form["StartDate"]
-        HotelID = request.form["HotelID"]
+        BookingID = request.json["BookingID"]
+        Occupants = request.json["Occupants"]
+        RoomID = request.json["RoomID"]
+        CusID = request.json["CusID"]
+        StartDate = request.json["StartDate"]
+        HotelID = request.json["HotelID"]
         database.commit("UPDATE Booking SET Occupants="+Occupants+", RoomID="+RoomID+", CusID="+CusID+", StartDate='"+StartDate+"', HotelID="+HotelID+" WHERE BookingID="+BookingID+";")
         return ""
     elif request.method == 'DELETE':
-        BookingID = request.form["BookingID"]
+        BookingID = request.json["BookingID"]
         database.commit("DELETE FROM Booking WHERE BookingID="+BookingID+";")
         return ""
 

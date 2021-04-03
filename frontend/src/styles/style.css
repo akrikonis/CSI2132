@@ -1,0 +1,92 @@
+body{
+    background-color: #40062A;
+}
+
+.loginContainer{
+    width: 300px;
+    height: 300px;
+    border-radius: 5%;
+    margin-left: 40%;
+    margin-top:10%;
+    background-color: white;
+}
+
+.container{
+    background-color: white;
+    margin-left: 2.5%;
+    width:95%;
+}
+
+.tab{
+    width: 10%;
+    text-align: center;
+}
+.tabC{
+    width: 11vw;
+    text-align: center;
+}
+
+tr{
+    border-bottom: #40062A 1px solid;
+}
+
+table{
+    margin-top: 2%;
+    padding-bottom: 5%;
+    margin-left: 9%;
+}
+
+h1{
+    padding-top: 3%;
+    text-align: center;
+    color: #40062A;
+}
+
+p{
+    margin-left: 2%;
+    font-size: smaller;
+}
+label{
+    margin-left:5%;
+    font-weight: bold;
+    color: #40062A;
+}
+
+input{
+    margin-left: 5%;
+    width:90%;
+    margin-bottom: 2%;
+    border-radius: 5%;
+    height: 25px;
+}
+
+input:focus,button:focus{
+    outline: none !important;
+    border-color: #40062A !important;
+    box-shadow: 0 0 10px #40062A !important;
+}
+
+button{
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 8%;
+    height: 35px;
+    background-color: #40062A;
+    color:white;
+}
+
+.adminB{
+    width:18%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+.optionsB{
+    width:50%;
+}
+
+.bookRoomSubmit, .rentRoomSubmit{
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+
+
