@@ -28,3 +28,13 @@ python3 -m flask run         (Or alternatively: flask run)
 
 python3 app.py
 
+## Front end
+### Set-up
+inside the frontend folder run the following commands:
+npm install
+npm run build
+
+### Running the front end
+
+npm run start
+
