@@ -364,12 +364,12 @@ class Admin extends Component {
       let data = response.data;
       let contents =[];
       contents.push(<button onClick={this.getHotelForm}>Insert</button>)
-      contents.push(<tr className="titles"><th className="tab">Hotel ID</th><th className="tab">Star Category</th><th className="tab">Number of rooms</th><th className="tab">Phone number</th><th className="tab">Address</th><th className="tab">Email</th><th className="tab">Capacity</th><th className="tab">Parent hotel ID</th><th className="tab">Name</th><th className="tab">Options</th></tr>)
+      contents.push(<tr className="titles"><th className="tab">Hotel ID</th><th className="tab">Star Category</th><th className="tab">Number of rooms</th><th className="tab">Phone number</th><th className="tab">Address</th><th className="tab">Email</th><th className="tab">Parent hotel ID</th><th className="tab">Name</th><th className="tab">Options</th></tr>)
       for(let i = 0; i< data.length; i++){
         this.state.hotels[data[i][0]] = data[i];
         let button1 = <button onClick={this.getHotelForm} className="optionsB">Edit</button>;
         let button2 = <button onClick={this.handleDeleteHotel} className="optionsB">Delete</button>
-        contents.push(<tr id={data[i][0]}><td className="tab">{data[i][0]}</td><td className="tab">{data[i][1]}</td><td className="tab">{data[i][2]}</td><td className="tab">{data[i][3]}</td><td className="tab">{data[i][4]}</td><td className="tab">{data[i][5]}</td><td className="tab">{data[i][6]}</td><td className="tab">{data[i][7]}</td><td className="tab">{data[i][8]}</td><td className="tab">{button1}{button2}</td></tr>)
+        contents.push(<tr id={data[i][0]}><td className="tab">{data[i][0]}</td><td className="tab">{data[i][1]}</td><td className="tab">{data[i][2]}</td><td className="tab">{data[i][3]}</td><td className="tab">{data[i][4]}</td><td className="tab">{data[i][5]}</td><td className="tab">{data[i][6]}</td><td className="tab">{data[i][7]}</td><td className="tab">{button1}{button2}</td></tr>)
       }
 
       let element = React.createElement("table", {className: "table", id:"table"}, contents);
